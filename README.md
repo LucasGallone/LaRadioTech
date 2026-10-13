@@ -6,6 +6,6 @@ Documentation technique, observations, expériences...
 <br>
 Pour y accéder, [cliquez ici.](https://lucasgallone.github.io/LaRadioTech)
 <br>
-Ou bien copiez-collez le lien suivant dans notre navigateur web :
+Ou bien copiez-collez le lien suivant dans votre navigateur web :
 <br>
 `https://lucasgallone.github.io/LaRadioTech`
