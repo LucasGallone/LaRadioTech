@@ -32,12 +32,15 @@ function resolveImage(img) {
   return clean;
 }
 
-const baseUrl = (process.env.APP_URL || process.env.VITE_APP_URL || '').replace(/\/+$/, '');
+const repoPrefix = '/LaRadioTech';
+const baseUrl = (process.env.APP_URL || process.env.VITE_APP_URL || 'https://lucasgallone.github.io').replace(/\/+$/, '');
 
 function toFullUrl(urlPath) {
   if (!urlPath) return urlPath;
   if (urlPath.startsWith('http://') || urlPath.startsWith('https://')) return urlPath;
-  return baseUrl ? `${baseUrl}${urlPath.startsWith('/') ? '' : '/'}${urlPath}` : urlPath;
+  const clean = urlPath.startsWith('/') ? urlPath : `/${urlPath}`;
+  const base = baseUrl.endsWith(repoPrefix) ? baseUrl : `${baseUrl}${repoPrefix}`;
+  return `${base}${clean.startsWith('/') ? clean : '/' + clean}`;
 }
 
 function createPageHtml(title, description, image, type = 'website', pageUrl = '') {
