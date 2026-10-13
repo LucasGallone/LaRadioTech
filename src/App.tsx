@@ -1218,7 +1218,7 @@ export default function App() {
                 Articles
               </button>
 
-              <div className={`w-[1px] h-3.5 mx-0.5 ${isDark ? 'bg-slate-700' : 'bg-slate-300'}`} aria-hidden="true" />
+              <div className={`w-[2px] h-4 mx-1.5 ${isDark ? 'bg-slate-600' : 'bg-slate-400'}`} aria-hidden="true" />
 
               <button
                 onClick={() => navigateTo('/a-propos')}
