@@ -934,12 +934,17 @@ export default function App() {
 
   // Si l'utilisateur accède à une URL non reconnue, retour propre sur l'accueil
   useEffect(() => {
-    const clean = window.location.pathname.replace(/\/+$/, '') || '/';
+    let clean = window.location.pathname;
+    if (repoBase && clean.startsWith(repoBase)) {
+      clean = clean.slice(repoBase.length);
+    }
+    clean = clean.replace(/\/+$/, '') || '/';
     if (clean !== '/' && clean !== '/a-propos') {
       const slug = clean.replace(/^\//, '');
       const found = allArticles.find((a) => a.slug === slug || encodeURIComponent(a.slug) === slug);
       if (!found) {
-        window.history.replaceState(null, '', '/');
+        const fullRoot = repoBase ? `${repoBase}/` : '/';
+        window.history.replaceState(null, '', fullRoot);
       }
     }
   }, [allArticles]);
