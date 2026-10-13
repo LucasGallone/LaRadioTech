@@ -1,0 +1,64 @@
+name: Déploiement GitHub Pages
+
+on:
+  # Déclenchement automatique à chaque push sur la branche main
+  push:
+    branches: ["main"]
+
+  # Déclenchement manuel possible depuis l'onglet Actions
+  workflow_dispatch:
+
+# Permissions minimales et sécurisées requises pour GitHub Pages
+# Aucun secret ni token sensible n'est exposé.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un seul déploiement simultané pour garantir l'intégrité de la mise en ligne
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Compilation du site Astro Starlight
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupération du code source
+        uses: actions/checkout@v4
+
+      - name: Configuration de l'environnement Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Configuration de GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Installation des dépendances
+        run: npm ci
+
+      - name: Compilation du site statique
+        run: npm run build
+        env:
+          ASTRO_TELEMETRY_DISABLED: 1
+
+      - name: Téléversement de l'artefact compilé
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    name: Publication sur GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Déploiement vers GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
