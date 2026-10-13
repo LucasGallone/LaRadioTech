@@ -1866,7 +1866,7 @@ export default function App() {
                     }}
                     className="mt-4 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-sky-600 text-white hover:bg-sky-500 transition-colors"
                   >
-                    Réinitialiser les filtres
+                    Réinitialiser le filtre
                   </button>
                 )}
               </div>
