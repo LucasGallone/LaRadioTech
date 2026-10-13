@@ -968,8 +968,9 @@ export default function App() {
       const title = `${selectedArticle.title} | La RadioTech`;
       const description = selectedArticle.description || 'Pour découvrir, apprendre, comprendre.';
       const rawImage = resolveImageUrl(selectedArticle.image) || '/web/logo-apercu.png';
-      const image = rawImage.startsWith('http') ? rawImage : `${origin}${rawImage.startsWith('/') ? '' : '/'}${rawImage}`;
-      const url = `${origin}/${selectedArticle.slug}`;
+      const cleanImg = rawImage.replace(/^\.\//, '/');
+      const image = cleanImg.startsWith('http') ? cleanImg : `${origin}${repoBase}${cleanImg.startsWith('/') ? cleanImg : '/' + cleanImg}`;
+      const url = `${origin}${repoBase}/${selectedArticle.slug}`;
 
       document.title = title;
       setMeta('description', description);
@@ -985,8 +986,10 @@ export default function App() {
     } else {
       const title = 'La RadioTech';
       const description = 'Pour découvrir, apprendre, comprendre.';
-      const image = `${origin}/web/logo-apercu.png`;
-      const url = activeTab === 'about' ? `${origin}/a-propos` : `${origin}/`;
+      const rawImage = '/web/logo-apercu.png';
+      const cleanImg = rawImage.replace(/^\.\//, '/');
+      const image = `${origin}${repoBase}${cleanImg.startsWith('/') ? cleanImg : '/' + cleanImg}`;
+      const url = activeTab === 'about' ? `${origin}${repoBase}/a-propos` : `${origin}${repoBase}/`;
 
       document.title = title;
       setMeta('description', description);
@@ -1214,6 +1217,8 @@ export default function App() {
               >
                 Articles
               </button>
+
+              <div className={`w-[1px] h-3.5 mx-0.5 ${isDark ? 'bg-slate-700' : 'bg-slate-300'}`} aria-hidden="true" />
 
               <button
                 onClick={() => navigateTo('/a-propos')}
