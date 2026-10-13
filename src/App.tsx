@@ -1068,7 +1068,9 @@ export default function App() {
         const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
         if (totalHeight > 0) {
           const progress = Math.min(100, Math.max(0, (scrollY / totalHeight) * 100));
-          setReadingProgress(progress);
+          // Utiliser un léger seuil (threshold) pour ignorer les micro-variations de hauteur 
+          // dues au chargement des images, sans bloquer la remontée normale.
+          setReadingProgress((prev) => Math.abs(prev - progress) > 0.5 ? progress : prev);
         }
 
         // Détection précise et robuste de la section active pour le sommaire
