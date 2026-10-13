@@ -209,16 +209,14 @@ function resolveImageUrl(img: string | undefined): string | null {
   if (clean.startsWith('http://') || clean.startsWith('https://')) {
     return clean;
   }
-  if (clean.startsWith('./')) {
-    clean = clean.replace(/^\.\//, '/');
-  } else if (!clean.startsWith('/')) {
-    clean = `/${clean}`;
-  }
+  const baseUrl = import.meta.env.BASE_URL || './';
+  clean = clean.replace(/^\.\//, '').replace(/^\//, '');
+  let resolved = `${baseUrl === './' ? './' : baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}${clean}`;
   // Si aucune extension de fichier standard n'est spécifiée, ajouter .jpg par défaut
-  if (!/\.(jpe?g|png|svg|webp|gif|avif)$/i.test(clean)) {
-    clean = `${clean}.jpg`;
+  if (!/\.(jpe?g|png|svg|webp|gif|avif)$/i.test(resolved)) {
+    resolved = `${resolved}.jpg`;
   }
-  return clean;
+  return resolved;
 }
 
 // Ratios d'aspect connus des images pour un rendu immédiat et sans saut d'affichage
