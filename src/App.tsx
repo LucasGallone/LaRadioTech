@@ -828,8 +828,22 @@ function loadAllArticles(): Article[] {
 
 const initialArticles = loadAllArticles();
 
+const repoBase = (() => {
+  if (typeof window === 'undefined') return '';
+  const pathname = window.location.pathname;
+  const parts = pathname.split('/').filter(Boolean);
+  if (parts.length > 0 && parts[0] !== 'a-propos' && !initialArticles.some(a => a.slug === parts[0])) {
+    return `/${parts[0]}`;
+  }
+  return '';
+})();
+
 function getRouteState(pathname: string, articles: Article[]) {
-  const clean = pathname.replace(/\/+$/, '') || '/';
+  let clean = pathname;
+  if (repoBase && clean.startsWith(repoBase)) {
+    clean = clean.slice(repoBase.length);
+  }
+  clean = clean.replace(/\/+$/, '') || '/';
   if (clean === '/' || clean === '') {
     return { tab: 'articles' as const, article: null };
   }
@@ -900,8 +914,10 @@ export default function App() {
     const route = getRouteState(path, allArticles);
     setActiveTab(route.tab);
     setSelectedArticle(route.article);
-    if (window.location.pathname !== path) {
-      window.history.pushState(null, '', path);
+    const cleanPath = path === '/' ? '/' : path;
+    const fullPath = repoBase ? `${repoBase}${cleanPath.startsWith('/') ? cleanPath : '/' + cleanPath}` : cleanPath;
+    if (window.location.pathname !== fullPath) {
+      window.history.pushState(null, '', fullPath);
     }
   }, [allArticles]);
 
@@ -1083,7 +1099,9 @@ export default function App() {
 
   const handleCopyLink = () => {
     try {
-      const url = `${window.location.origin}/${selectedArticle?.slug || ''}`;
+      const slug = selectedArticle?.slug || '';
+      const fullPath = repoBase ? `${repoBase}/${slug}` : `/${slug}`;
+      const url = `${window.location.origin}${fullPath}`;
       navigator.clipboard.writeText(url);
       setCopiedLink(true);
       setTimeout(() => setCopiedLink(false), 2200);
