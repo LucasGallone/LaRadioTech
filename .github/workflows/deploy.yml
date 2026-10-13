@@ -8,8 +8,6 @@ on:
   # Déclenchement manuel possible depuis l'onglet Actions
   workflow_dispatch:
 
-# Permissions minimales et sécurisées requises pour GitHub Pages
-# Aucun secret ni token sensible n'est exposé.
 permissions:
   contents: read
   pages: write
