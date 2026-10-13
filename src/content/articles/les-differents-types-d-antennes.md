@@ -53,7 +53,7 @@ Nous retrouvons, ici, le modèle “dipôle” mais avec une subtilité visuelle
 
 Ce type d’antenne aura tendance à être utilisé pour des radios disposant de fortes contraintes (Réduction de puissance imposée par l’ARCOM) vers l’arrière du diagramme de rayonnement attribué.
 
-Prenons l’exemple de “Radio A” diffusée sur le 106.0 MHz, ayant un diagramme favorisant la direction Sud-Est. Sur cette même fréquence, se trouve “Radio B”, diffusée sur le 106.1 MHz, à 50 kilomètres du site d’émission de “Radio A”, situé au Nord-Ouest de celui-ci.
+Prenons l’exemple de “Radio A” diffusée sur le 106.0 MHz, ayant un diagramme favorisant la direction Sud-Est. Sur le 106.1 MHz, se trouve “Radio B”, dont l'émetteur se situe à 50 kilomètres du site d’émission de “Radio A”, situé au Nord-Ouest de celui-ci.
 
 Avec une telle configuration, l’ARCOM aura tendance à imposer une forte réduction de puissance vers le Nord-Ouest pour “Radio A” afin que son signal ne vienne pas trop marcher sur celui de “Radio B”, ce qui engendrerait, évidemment, des perturbations avec un simple écart de 0.1 MHz entre les deux radios. Dans un tel cas de figure, une antenne panneau sera conseillée, du fait de la réduction physique de puissance qu’elle offre à l’opposé de son orientation initiale. 
 
