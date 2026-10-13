@@ -46,7 +46,7 @@ La deuxième photo illustre un design que nous aurons plutôt tendance à voir a
 
 ## L’antenne panneau
 
-![Un panneau taillé pour la bande FM | © Lucas Gallone](/img/panneau-fm.jpg)
+![Une antenne panneau FM | © Lucas Gallone](/img/panneau-fm.jpg)
 ![Plusieurs panneaux DAB+ couplés | © Lucas Gallone](/img/panneaux-dab.jpg)
 
 Nous retrouvons, ici, le modèle “dipôle” mais avec une subtilité visuelle et technique : La présence d’un “cadre” à l’arrière de celui-ci (un écran réflecteur, pour être plus précis), qui permet de réduire considérablement la puissance vers la direction opposée de l’orientation de l’antenne, tout en maximisant son rendement vers la direction initiale, puisqu’il “bloque” (non de manière intégrale, bien sûr) les ondes vers l’opposé pour les renvoyer vers l’avant.
@@ -108,11 +108,11 @@ La polarisation horizontale est également utilisée par des radios privées, g�
 
 ![Polarisation horizontale sur un grand site Radio France | © Lucas Gallone](/img/pol-horizontale.jpg)
 
-La polarisation mixte, assez souvent visible dans les grandes villes : Comme son nom l’indique, on utilise ici un mélange de polarisation verticale et de polarisation horizontale. Une partie de la puissance est donc attribuée à la polarisation verticale, et une autre à la polarisation horizontale. Contrairement aux idées reçues, ce n’est pas forcément du 50/50 !
+La polarisation **mixte**, assez souvent visible dans les grandes villes : Comme son nom l’indique, on utilise ici un mélange de polarisation verticale et de polarisation horizontale. Une partie de la puissance est donc attribuée à la polarisation verticale, et une autre à la polarisation horizontale. Contrairement aux idées reçues, ce n’est pas forcément du 50/50 !
 
 ![Plusieurs panneaux en polarisation mixte | © Lucas Gallone](/img/pol-mixte.jpg)
 
-Enfin, citons à nouveau la polarisation circulaire, que nous avons eu l’occasion de décortiquer précédemment.
+Enfin, citons à nouveau la polarisation **circulaire**, que nous avons eu l’occasion de décortiquer précédemment.
 
 ---
 
