@@ -1,5 +1,5 @@
 ---
-title: "Les différents types d'antennes d'émission FM / DAB+"
+title: "Les différents types d'antennes d'émission FM et DAB+"
 description: "Comprendre leur fonctionnement, leur utilisation, et apprendre à les identifier visuellement."
 author: "Lucas Gallone"
 date: 13/10/2026
