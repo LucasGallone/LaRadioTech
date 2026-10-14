@@ -741,11 +741,58 @@ function MarkdownRenderer({
   return <div className="space-y-1">{elements}</div>;
 }
 
-// Mise en valeur gras et code
+// Mise en valeur des liens (markdown [texte](url) et html <a>), du gras (**texte**) et du code (`code`)
 function renderFormattedText(text: string, isDark: boolean): React.ReactNode {
-  const parts = text.split(/(\*\*[^*]+\*\*|`[^`]+`)/g);
+  const parts = text.split(/(\[[^\]]+\]\([^)]+\)|<a\s+[^>]*href=["'][^"']+["'][^>]*>.*?<\/a>|\*\*[^*]+\*\*|`[^`]+`)/gi);
 
   return parts.map((part, i) => {
+    // 1. Liens Markdown : [libellé](url)
+    const mdLink = part.match(/^\[(.*?)\]\((.*?)\)$/);
+    if (mdLink) {
+      const linkLabel = mdLink[1];
+      const linkUrl = mdLink[2].trim();
+      const isExternal = /^https?:\/\//i.test(linkUrl) || linkUrl.startsWith('//');
+      return (
+        <a
+          key={i}
+          href={linkUrl}
+          target={isExternal ? '_blank' : undefined}
+          rel={isExternal ? 'noopener noreferrer' : undefined}
+          className={`underline underline-offset-2 font-medium transition-colors ${
+            isDark
+              ? 'text-sky-400 hover:text-sky-300'
+              : 'text-sky-600 hover:text-sky-700'
+          }`}
+        >
+          {renderInlineOnly(linkLabel, isDark)}
+        </a>
+      );
+    }
+
+    // 2. Liens HTML : <a href="...">...</a>
+    const htmlLink = part.match(/^<a\s+[^>]*href=["']([^"']+)["'][^>]*>(.*?)<\/a>$/i);
+    if (htmlLink) {
+      const linkUrl = htmlLink[1].trim();
+      const linkLabel = htmlLink[2];
+      const isExternal = /^https?:\/\//i.test(linkUrl) || linkUrl.startsWith('//');
+      return (
+        <a
+          key={i}
+          href={linkUrl}
+          target={isExternal ? '_blank' : undefined}
+          rel={isExternal ? 'noopener noreferrer' : undefined}
+          className={`underline underline-offset-2 font-medium transition-colors ${
+            isDark
+              ? 'text-sky-400 hover:text-sky-300'
+              : 'text-sky-600 hover:text-sky-700'
+          }`}
+        >
+          {renderInlineOnly(linkLabel, isDark)}
+        </a>
+      );
+    }
+
+    // 3. Texte en gras : **texte**
     if (part.startsWith('**') && part.endsWith('**')) {
       return (
         <strong
@@ -756,6 +803,8 @@ function renderFormattedText(text: string, isDark: boolean): React.ReactNode {
         </strong>
       );
     }
+
+    // 4. Code inline : `code`
     if (part.startsWith('`') && part.endsWith('`')) {
       return (
         <code
@@ -770,7 +819,34 @@ function renderFormattedText(text: string, isDark: boolean): React.ReactNode {
         </code>
       );
     }
+
     return part;
+  });
+}
+
+function renderInlineOnly(text: string, isDark: boolean): React.ReactNode {
+  const subParts = text.split(/(\*\*[^*]+\*\*|`[^`]+`)/g);
+  return subParts.map((sub, j) => {
+    if (sub.startsWith('**') && sub.endsWith('**')) {
+      return (
+        <strong key={j} className={`font-semibold ${isDark ? 'text-white' : 'text-slate-950'}`}>
+          {sub.slice(2, -2)}
+        </strong>
+      );
+    }
+    if (sub.startsWith('`') && sub.endsWith('`')) {
+      return (
+        <code
+          key={j}
+          className={`px-1 py-0.5 rounded font-mono text-xs ${
+            isDark ? 'bg-slate-800 text-sky-300' : 'bg-slate-200 text-slate-900'
+          }`}
+        >
+          {sub.slice(1, -1)}
+        </code>
+      );
+    }
+    return sub;
   });
 }
 
