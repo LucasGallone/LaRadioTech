@@ -41,7 +41,7 @@ On y trouve, entre autres, mon décodeur RDS avancé, “RDSExpert”, qui déte
 
 ![L'installation d'un serveur FM hébergé en République Tchèque | Photo : © Marek Farkaš](/img/installation-dx-rep-tcheque.png)
 
-Au départ, et comme son nom l’indique, ce projet a été pensé pour les DXers (Les passionnés de réceptions à longue distance). L’idée était de permettre à ces passionnés de surveiller les conditions de propagation Troposphérique et Sporadique E, et éventuellement de recevoir des stations FM de leur pays… depuis un autre !
+Au départ, et comme son nom l’indique, ce projet a été pensé pour les DXers (Les passionnés de réceptions à longue distance). L’idée était de permettre à ces passionnés de surveiller les conditions de propagation Troposphérique et Sporadique E, et éventuellement de recevoir des stations FM de leur pays depuis un autre !
 
 La petite communauté a vite grandi. En quelques mois, le nombre de serveurs a considérablement augmenté. Si bien que les usages se sont démocratisés : Certains serveurs ont été conçus pour permettre purement et simplement aux utilisateurs de faire un tour sur la bande FM locale de telle ou telle ville, faire des relevés RDS, etc…
 
