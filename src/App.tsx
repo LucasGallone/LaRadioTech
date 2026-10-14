@@ -1161,15 +1161,29 @@ export default function App() {
     return extractHeadings(selectedArticle.content);
   }, [selectedArticle]);
 
-  // Détection des articles ayant au moins un tag en commun avec l'article courant
+  // Détection des articles ayant au moins un tag en commun avec l'article courant :
+  // - S'il n'y en a qu'un seul : on le retient (titre singulier "Cet article...")
+  // - S'il y en a 2 ou plus : tirage au sort aléatoire (Fisher-Yates) pour en retenir exactement 2 (titre pluriel "Ces articles...")
   const relatedArticles = useMemo(() => {
     if (!selectedArticle || !selectedArticle.tags || selectedArticle.tags.length === 0) return [];
-    return allArticles.filter(
+    const candidates = allArticles.filter(
       (article) =>
         article.slug !== selectedArticle.slug &&
         article.tags.some((tag) => selectedArticle.tags.includes(tag))
     );
-  }, [selectedArticle, allArticles]);
+
+    if (candidates.length <= 1) {
+      return candidates;
+    }
+
+    // Mélange aléatoire (Fisher-Yates) pour piocher 2 articles au hasard parmi tous ceux ayant au moins un mot-clé en commun
+    const pool = [...candidates];
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    return pool.slice(0, 2);
+  }, [selectedArticle?.slug, allArticles]);
 
   const isDark = theme === 'dark';
 
@@ -1416,17 +1430,23 @@ export default function App() {
                   />
                 </div>
 
-                {/* Section d'articles dans le même style (affichée uniquement si au moins 2 articles partagent au moins un tag en commun) */}
-                {relatedArticles.length >= 2 && (
+                {/* Section d'articles recommandés (affichée dès qu'au moins 1 article partage un mot-clé en commun) */}
+                {relatedArticles.length > 0 && (
                   <section className={`mt-14 pt-10 border-t ${
                     isDark ? 'border-slate-800' : 'border-[#cbd3dd]'
                   }`}>
-                    <h2 className={`text-xl sm:text-2xl font-bold tracking-tight mb-6 ${
+                    <h2 className={`text-xl sm:text-2xl font-bold tracking-tight mb-6 text-center ${
                       isDark ? 'text-white' : 'text-slate-950'
                     }`}>
-                      Ces articles pourraient également vous plaire...
+                      {relatedArticles.length === 1
+                        ? 'Cet article pourrait également vous plaire...'
+                        : 'Ces articles pourraient également vous plaire...'}
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className={
+                      relatedArticles.length === 1
+                        ? 'flex justify-center w-full'
+                        : 'grid grid-cols-1 md:grid-cols-2 gap-6'
+                    }>
                       {relatedArticles.map((relArticle) => {
                         const relPubDate = formatDate(relArticle.date);
                         const relCoverImage = resolveImageUrl(relArticle.image);
@@ -1436,6 +1456,8 @@ export default function App() {
                             key={relArticle.slug}
                             onClick={() => navigateTo(`/${relArticle.slug}`)}
                             className={`group cursor-pointer rounded-2xl border overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 ${
+                              relatedArticles.length === 1 ? 'w-full max-w-lg' : ''
+                            } ${
                               isDark
                                 ? 'bg-[#0e1422] border-slate-800/80 hover:border-slate-700 hover:shadow-lg'
                                 : 'bg-[#e2e7ef] border-[#cbd3dd] hover:border-[#b8c2ce] hover:shadow-md'
